@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:text="@string/if_this_condition"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,33 +35,35 @@
             android:id="@+id/thenWhat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="@string/then_what_action"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/conditionSpinner" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.521"
+            app:layout_constraintStart_toEndOf="@+id/ifThis"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/conditionSpinner"
-            android:layout_width="376dp"
-            android:layout_height="33dp"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             style="@style/Widget.AppCompat.Spinner.Underlined"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="325dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ifThis" />
 
         <Spinner
             android:id="@+id/actionSpinner"
-            android:layout_width="377dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="325dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="32dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.507"
+            app:layout_constraintStart_toEndOf="@+id/conditionSpinner"
             app:layout_constraintTop_toBottomOf="@+id/thenWhat" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
