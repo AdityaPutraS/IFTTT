@@ -1,22 +1,35 @@
 package com.ksatukeltiga.ifttw;
 
-import android.util.Log;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Entity
-public class ConditionModule extends Module implements Serializable {
+public class ConditionModule implements Serializable {
     @PrimaryKey(autoGenerate = true)
-    private int conditionId;
+    private int id;
 
+    protected String data;
+    protected String moduleName;
     protected boolean repeated;
     protected String conditionString;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
 
     public String getConditionString() {
         return conditionString;
@@ -34,13 +47,13 @@ public class ConditionModule extends Module implements Serializable {
         this.repeated = repeated;
     }
 
-    public int getConditionId() {
-        return conditionId;
+    public int getId() {
+        return id;
     }
 
-    public void setConditionId(int conditionId) {
-        this.conditionId = conditionId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void initCondition() {}
+    public void connectAksi(ActionModule aksi) {}
 }

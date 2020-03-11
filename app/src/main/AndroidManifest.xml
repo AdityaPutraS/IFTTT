@@ -22,6 +22,12 @@
         <activity
             android:name=".AddRoutineActivity"
             android:label="Add Routine" />
+        <service
+            android:name=".ActionModule"
+            android:exported="false"/>
+        <service
+            android:name=".NotifyModule"
+            android:exported="false"/>
     </application>
 
 </manifest>

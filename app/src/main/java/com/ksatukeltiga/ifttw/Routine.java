@@ -22,6 +22,13 @@ public class Routine implements Serializable {
     @Embedded(prefix = "aksi_")
     private ActionModule aksi;
 
+    public Routine(ConditionModule kondisi, ActionModule aksi)
+    {
+        this.kondisi = kondisi;
+        this.aksi = aksi;
+        this.kondisi.connectAksi(this.aksi);
+    }
+
     public ConditionModule getKondisi() {
         return kondisi;
     }

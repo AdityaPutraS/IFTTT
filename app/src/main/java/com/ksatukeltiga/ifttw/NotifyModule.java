@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -14,18 +15,53 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class NotifyModule extends ActionModule {
     private String notification;
+    private String title;
     private NotificationCompat.Builder builder;
     private NotificationManager notificationManager;
-    private Context context;
 
-    public NotifyModule(String notification, Context context)
+    public NotifyModule()
     {
-        this.moduleName = "NotifyModule";
-        this.data = notification;
+        super(0,
+                "",
+                "NotifyModule",
+                "");
+    }
+    public NotifyModule(String title, String notification)
+    {
+        super(0,
+                title + "---" + notification,
+                "NotifyModule",
+                "Notify (" + title +  ") \"" + notification + "\"");
         this.notification = notification;
-        this.actionString = "Notify \"" + notification + "\"";
-        this.context = context;
+        this.title = title;
+    }
 
+    @Override
+    public void setData(String data)
+    {
+        this.data = data;
+        String[] temp = data.split("---");
+        this.title = temp[0];
+        this.notification = temp[1];
+    }
+
+    @Override
+    public Bundle getBundle()
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("idNotification", 1);
+        bundle.putString("judul", this.title);
+        bundle.putString("pesan", this.notification);
+        return bundle;
+    }
+
+    @Override
+    protected void onHandleIntent(Intent workIntent) {
+        Log.println(Log.INFO, "NotifyModule", "Background service notify jalan");
+        int idNotif = workIntent.getIntExtra("idNotification", 1);
+        String judul = workIntent.getStringExtra("judul");
+        String pesan = workIntent.getStringExtra("pesan");
+        Log.println(Log.INFO, "NotifyModule", "Dapat notif : " + judul +  "-=-" + pesan);
         // Buat Notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             String channel_id = "3000";
@@ -34,36 +70,25 @@ public class NotifyModule extends ActionModule {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(channel_id, name, importance);
             channel.setDescription(description);
-            notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager = this.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-            builder = new NotificationCompat.Builder(context, channel_id);
+            builder = new NotificationCompat.Builder(this, channel_id);
         } else {
             Log.println(Log.INFO, "NotifyModule", "wow tua");
-            builder = new NotificationCompat.Builder(context);
+            builder = new NotificationCompat.Builder(this);
         }
 
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         builder.setSmallIcon(R.drawable.ic_notification)
-            .setContentTitle("Notification")
-            .setContentText(notification)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true);
-    }
+                .setContentTitle(judul)
+                .setContentText(pesan)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
-    @Override
-    public void setData(String data)
-    {
-        this.data = data;
-        this.notification = data;
-    }
-
-    @Override
-    public void doAction()
-    {
-        notificationManager.notify(1, builder.build());
-        Log.println(Log.DEBUG, "action", "notify harusnya");
+        notificationManager.notify(idNotif, builder.build());
+        Log.println(Log.DEBUG, "NotifyModule", "notify harusnya");
     }
 }
