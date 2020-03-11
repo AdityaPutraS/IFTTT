@@ -41,13 +41,19 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // AddRoutineActivity.saveRoutine();
+                saveRoutine();
                 startActivity(new Intent(AddRoutineActivity.this, MainActivity.class));
             }
         });
     }
 
-    private static void saveRoutine() {
+    private void saveRoutine() {
+        RutinRepository rutinRepository = new RutinRepository(getApplicationContext());
+        Spinner conditionSpinner = findViewById(R.id.conditionSpinner);
+        Spinner actionSpinner = findViewById(R.id.actionSpinner);
+        String kondisi = conditionSpinner.getSelectedItem().toString();
+        String aksi = actionSpinner.getSelectedItem().toString();
+        rutinRepository.insertRutin(kondisi, aksi);
     }
 
     @Override
