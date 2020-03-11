@@ -32,4 +32,6 @@ public class ActionModule extends Module implements Serializable {
     public void setActionId(int actionId) {
         this.actionId = actionId;
     }
+
+    public void doAction() {}
 }

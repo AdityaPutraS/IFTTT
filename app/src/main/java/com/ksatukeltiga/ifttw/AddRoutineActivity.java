@@ -56,8 +56,9 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
         String kondisiString = conditionSpinner.getSelectedItem().toString();
         String aksiString = actionSpinner.getSelectedItem().toString();
         ConditionModule kondisi = new TimerModule(new Date(), false);
-        ActionModule aksi = new NotifyModule(kondisiString + " " + aksiString);
+        ActionModule aksi = new NotifyModule(kondisiString + " " + aksiString, getApplicationContext());
         routineRepository.insertRoutine(kondisi, aksi);
+        aksi.doAction();
     }
 
     @Override

@@ -41,4 +41,6 @@ public class ConditionModule extends Module implements Serializable {
     public void setConditionId(int conditionId) {
         this.conditionId = conditionId;
     }
+
+    public void initCondition() {}
 }
