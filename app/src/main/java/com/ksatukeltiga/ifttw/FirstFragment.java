@@ -35,12 +35,12 @@ public class FirstFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        RutinRepository rutinRepository = new RutinRepository(getActivity().getApplicationContext());
+        RoutineRepository routineRepository = new RoutineRepository(getActivity().getApplicationContext());
 
-        rutinRepository.getRutin().observe(this.getViewLifecycleOwner(), new Observer<List<Rutin>>() {
+        routineRepository.getRoutine().observe(this.getViewLifecycleOwner(), new Observer<List<Routine>>() {
             @Override
-            public void onChanged(@Nullable List<Rutin> listRutin) {
-                mListadapter = new ListAdapter(new ArrayList<Rutin>(listRutin));
+            public void onChanged(@Nullable List<Routine> listRoutine) {
+                mListadapter = new ListAdapter(new ArrayList<Routine>(listRoutine));
                 mRecyclerView.setAdapter(mListadapter);
             }
         });
@@ -53,9 +53,9 @@ public class FirstFragment extends Fragment {
 
     public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
     {
-        private ArrayList<Rutin> dataList;
+        private ArrayList<Routine> dataList;
 
-        public ListAdapter(ArrayList<Rutin> data)
+        public ListAdapter(ArrayList<Routine> data)
         {
             this.dataList = data;
         }
@@ -76,7 +76,7 @@ public class FirstFragment extends Fragment {
         @Override
         public ListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
         {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rutincard, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.routine_card, parent, false);
 
             ViewHolder viewHolder = new ViewHolder(view);
             return viewHolder;
@@ -85,8 +85,8 @@ public class FirstFragment extends Fragment {
         @Override
         public void onBindViewHolder(ListAdapter.ViewHolder holder, final int position)
         {
-            holder.textKondisi.setText(dataList.get(position).getKondisi());
-            holder.textAksi.setText(dataList.get(position).getAksi());
+            holder.textKondisi.setText(dataList.get(position).getKondisi().getConditionString());
+            holder.textAksi.setText(dataList.get(position).getAksi().getActionString());
 
             holder.itemView.setOnClickListener(new View.OnClickListener()
             {

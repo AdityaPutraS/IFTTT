@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.Date;
+
 public class AddRoutineActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     @Override
@@ -48,12 +50,14 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
     }
 
     private void saveRoutine() {
-        RutinRepository rutinRepository = new RutinRepository(getApplicationContext());
+        RoutineRepository routineRepository = new RoutineRepository(getApplicationContext());
         Spinner conditionSpinner = findViewById(R.id.conditionSpinner);
         Spinner actionSpinner = findViewById(R.id.actionSpinner);
-        String kondisi = conditionSpinner.getSelectedItem().toString();
-        String aksi = actionSpinner.getSelectedItem().toString();
-        rutinRepository.insertRutin(kondisi, aksi);
+        String kondisiString = conditionSpinner.getSelectedItem().toString();
+        String aksiString = actionSpinner.getSelectedItem().toString();
+        ConditionModule kondisi = new TimerModule(new Date(), false);
+        ActionModule aksi = new NotifyModule(kondisiString + " " + aksiString);
+        routineRepository.insertRoutine(kondisi, aksi);
     }
 
     @Override

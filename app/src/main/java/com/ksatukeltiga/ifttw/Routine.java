@@ -3,34 +3,38 @@ package com.ksatukeltiga.ifttw;
 import android.util.Log;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 import androidx.room.TypeConverters;
 
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class Rutin implements Serializable {
+public class Routine implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String kondisi;
-    private String aksi;
+    @Embedded(prefix = "kondisi_")
+    private ConditionModule kondisi;
+    @Embedded(prefix = "aksi_")
+    private ActionModule aksi;
 
-    public String getKondisi() {
+    public ConditionModule getKondisi() {
         return kondisi;
     }
 
-    public void setKondisi(String kondisi) {
+    public void setKondisi(ConditionModule kondisi) {
         this.kondisi = kondisi;
     }
 
-    public String getAksi() {
+    public ActionModule getAksi() {
         return aksi;
     }
 
-    public void setAksi(String aksi) {
+    public void setAksi(ActionModule aksi) {
         this.aksi = aksi;
     }
 
