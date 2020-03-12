@@ -44,7 +44,7 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
             @Override
             public void onClick(View view) {
                 saveRoutine();
-                startActivity(new Intent(AddRoutineActivity.this, MainActivity.class));
+                finish();
             }
         });
     }

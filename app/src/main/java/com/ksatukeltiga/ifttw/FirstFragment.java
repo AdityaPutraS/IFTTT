@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,12 +66,14 @@ public class FirstFragment extends Fragment {
         {
             TextView textKondisi;
             TextView textAksi;
+            Switch switchRoutine;
 
             public ViewHolder(View itemView)
             {
                 super(itemView);
                 this.textKondisi = (TextView) itemView.findViewById(R.id.kondisi);
                 this.textAksi = (TextView) itemView.findViewById(R.id.aksi);
+                this.switchRoutine = (Switch) itemView.findViewById(R.id.switchRoutine);
             }
         }
 
@@ -96,6 +100,18 @@ public class FirstFragment extends Fragment {
                     Toast.makeText(getActivity(), "Item " + position + " is clicked.", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            holder.switchRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    String state = isChecked ? "started" : "stopped" ;
+                    Toast.makeText(getActivity(), "Routine " + position + " " + state, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return position;
         }
 
         @Override

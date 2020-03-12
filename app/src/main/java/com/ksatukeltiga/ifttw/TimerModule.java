@@ -8,18 +8,22 @@ import android.os.SystemClock;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.Random;
 
 public class TimerModule extends ConditionModule {
-    private Date activate_when;
+    private Date activateWhen;
     private Context context;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+    private int requestCode;
 
     public TimerModule(Date activate, boolean repeated, Context context)
     {
         this.moduleName = "TimerModule";
-        this.activate_when = activate;
-        this.data = Long.toString(activate.getTime());
+        this.activateWhen = activate;
+        Random rand = new Random();
+        this.requestCode = rand.nextInt();
+        this.data = this.requestCode + "---" + activate.getTime();
         this.repeated = repeated;
         this.conditionString = activate.toString();
         this.context = context;
@@ -29,7 +33,9 @@ public class TimerModule extends ConditionModule {
     public void setData(String data)
     {
         this.data = data;
-        this.activate_when = new Date(Long.valueOf(data));
+        String[] args = data.split("---");
+        this.requestCode = Integer.parseInt(args[0]);
+        this.activateWhen = new Date(Long.parseLong(args[1]));
     }
 
     @Override
@@ -40,7 +46,7 @@ public class TimerModule extends ConditionModule {
         Intent intent = new Intent(context, aksi.getClass());
         intent.putExtras(aksi.getBundle());
         Log.println(Log.INFO, "TimerModule", aksi.getBundle().toString());
-        alarmIntent = PendingIntent.getService(context, 0, intent, 0);
+        alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
 
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() +
