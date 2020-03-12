@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ToggleButton
+        android:id="@+id/sunday"
+        style="@style/AppTheme.SundayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color_sunday"
+        android:textOff="S"
+        android:textOn="S" />
+
+    <ToggleButton
+        android:id="@+id/monday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="M"
+        android:textOn="M" />
+
+    <ToggleButton
+        android:id="@+id/tuesday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/wednesday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="W"
+        android:textOn="W" />
+
+    <ToggleButton
+        android:id="@+id/thursday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/friday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="F"
+        android:textOn="F" />
+
+    <ToggleButton
+        android:id="@+id/saturday"
+        style="@style/AppTheme.NormalDayButton"
+        android:layout_width="@dimen/day_pick_toogle_dim"
+        android:layout_height="@dimen/day_pick_toogle_dim"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/toogle_day_bg_color"
+        android:textOff="S"
+        android:textOn="S" />
+</LinearLayout>

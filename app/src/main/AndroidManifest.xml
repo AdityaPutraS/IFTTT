@@ -22,12 +22,16 @@
         <activity
             android:name=".AddRoutineActivity"
             android:label="Add Routine" />
+        <activity
+            android:name=".TimerFragment"
+            android:label="Set Timer" />
+
         <service
             android:name=".ActionModule"
-            android:exported="false"/>
+            android:exported="false" />
         <service
             android:name=".NotifyModule"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

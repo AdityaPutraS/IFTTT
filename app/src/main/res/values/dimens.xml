@@ -6,4 +6,6 @@
     <dimen name="appbar_padding">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="recyclerPadBot">90dp</dimen>
+    <dimen name="day_pick_dim">30dp</dimen>
+    <dimen name="day_pick_toogle_dim">35dp</dimen>
 </resources>
