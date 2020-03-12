@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +24,8 @@ import java.util.List;
 public class FirstFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ListAdapter mListadapter;
-
+    private RoutineRepository routineRepository;
+    private LiveData<List<Routine>> activeRoutine;
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -39,23 +41,34 @@ public class FirstFragment extends Fragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        RoutineRepository routineRepository = new RoutineRepository(getActivity().getApplicationContext());
+        forceUpdate(true);
 
-        routineRepository.getRoutine(true).observe(this.getViewLifecycleOwner(), new Observer<List<Routine>>() {
+        return view;
+    }
+
+    public void forceUpdate(boolean status)
+    {
+        routineRepository = new RoutineRepository(getActivity().getApplicationContext());
+        activeRoutine = routineRepository.getRoutine(status);
+        activeRoutine.observe(this.getViewLifecycleOwner(), new Observer<List<Routine>>() {
             @Override
             public void onChanged(@Nullable List<Routine> listRoutine) {
                 Log.println(Log.INFO, "observer", "Observer terpanggil");
                 mListadapter = new ListAdapter(getActivity().getApplicationContext(), new ArrayList<Routine>(listRoutine));
                 mRecyclerView.setAdapter(mListadapter);
-
             }
         });
-        return view;
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.println(Log.INFO, "FirstFragment", "masuk onViewCreated");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.println(Log.INFO, "FirstFragment", "masuk onStart");
     }
 
     @Override
@@ -68,6 +81,13 @@ public class FirstFragment extends Fragment {
     public void onStop() {
         super.onStop();
         Log.println(Log.INFO, "FirstFragment", "masuk onStop");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        forceUpdate(true);
+        Log.println(Log.INFO, "FirstFragment", "masuk onResume");
     }
 
     public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
@@ -121,17 +141,21 @@ public class FirstFragment extends Fragment {
                 @Override
                 public void onClick(View v)
                 {
-                    Toast.makeText(getActivity(), "Item " + position + " is clicked.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Routine " + (position + 1) + " is clicked.", Toast.LENGTH_SHORT).show();
                 }
             });
 
             holder.switchRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     String state = isChecked ? "started" : "stopped" ;
-                    dataList.get(position).setActive(isChecked);
+                    Routine temp = dataList.get(position);
+                    temp.setActive(isChecked);
                     RoutineRepository routineRepository = new RoutineRepository(context);
-                    routineRepository.updateRoutine(dataList.get(position));
-                    Toast.makeText(getActivity(), "Routine " + position + " " + state, Toast.LENGTH_SHORT).show();
+                    routineRepository.deleteRoutine(dataList.get(position));
+                    routineRepository.insertRoutine(temp);
+                    Toast.makeText(getActivity(), "Routine " + (position + 1) + " " + state, Toast.LENGTH_SHORT).show();
+//                    dataList.remove(position);
+//                    forceUpdate(true);
                 }
             });
         }
