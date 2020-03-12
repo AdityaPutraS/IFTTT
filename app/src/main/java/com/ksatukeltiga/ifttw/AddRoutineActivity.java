@@ -23,6 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
 
 public class AddRoutineActivity extends AppCompatActivity {
 
@@ -66,17 +67,24 @@ public class AddRoutineActivity extends AppCompatActivity {
         actionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                switch (position) {
-                    case 0:
-                        Toast.makeText(parent.getContext(), "Spinner item 1!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(parent.getContext(), "Spinner item 2!", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(parent.getContext(), "Spinner item 3!", Toast.LENGTH_SHORT).show();
-                        break;
+                LinearLayout actionContainer = parent.getRootView().findViewById(R.id.actionContainer);
+                if(actionContainer != null) {
+                    actionContainer.removeAllViews();
+                    switch (position) {
+                        case 0:
+                            break;
+                        case 1:
+                            FragmentManager fragMan = getSupportFragmentManager();
+                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
+                            Fragment notifyFragment = new NotifyFragment();
+                            fragTransaction.add(R.id.actionContainer, notifyFragment , "notifyFragment");
+                            fragTransaction.commit();
+                            Toast.makeText(parent.getContext(), "Notify Action", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 2:
+                            Toast.makeText(parent.getContext(), "Spinner item 3!", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
                 }
             }
 
