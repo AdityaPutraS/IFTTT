@@ -11,7 +11,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -34,7 +33,7 @@ public class FirstFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_first, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewFragFirst);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -42,7 +41,7 @@ public class FirstFragment extends Fragment {
 
         RoutineRepository routineRepository = new RoutineRepository(getActivity().getApplicationContext());
 
-        routineRepository.getRoutine().observe(this.getViewLifecycleOwner(), new Observer<List<Routine>>() {
+        routineRepository.getRoutine(true).observe(this.getViewLifecycleOwner(), new Observer<List<Routine>>() {
             @Override
             public void onChanged(@Nullable List<Routine> listRoutine) {
                 Log.println(Log.INFO, "observer", "Observer terpanggil");

@@ -75,4 +75,8 @@ public class RoutineRepository {
         public LiveData<List<Routine>> getRoutine() {
             return routineDatabase.routineDao().fetchAllRoutine();
         }
+
+        public LiveData<List<Routine>> getRoutine(boolean status) {
+            return routineDatabase.routineDao().fetchAllRoutine(status);
+        }
 }

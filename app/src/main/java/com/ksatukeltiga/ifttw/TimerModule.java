@@ -102,6 +102,7 @@ public class TimerModule extends ConditionModule {
     @Override
     public void connectAksi(ActionModule aksi)
     {
+        Log.println(Log.INFO, "TimerModule", "ConnectAksi data: " + this.data);
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Log.println(Log.INFO, "TimerModule", "ConnectAksi className: " + aksi.getClass().getName());
         Intent intent = new Intent(context, aksi.getClass());
@@ -110,35 +111,39 @@ public class TimerModule extends ConditionModule {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.activateWhen);
-        if(this.repeatEveryDay)
-        {
-            Log.println(Log.INFO, "TimerModule", "Everyday " + calendar.getTime().toString() + " " + this.requestCode);
-            PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                    AlarmManager.INTERVAL_DAY, alarmIntent);
-        }else if(this.isRepeating)
-        {
-            int[] dayArr = {Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY,
-                            Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY,
-                            Calendar.SATURDAY};
-            for (int i = 0; i < this.repeated.length; i++) {
-                if(this.repeated[i]) {
-                    //Bentuk tanggal untuk hari ke - i
-                    calendar.set(Calendar.DAY_OF_WEEK, dayArr[i]);
-                    PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode + i,
-                            intent, 0);
-                    Log.println(Log.INFO, "TimerModule", "Repeating " + calendar.getTime().toString() + " " + this.requestCode);
-                    alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-                            AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+        // Cek apakah activateWhen sudah lewat / belum
+        long diff = Calendar.getInstance().getTimeInMillis() - calendar.getTimeInMillis();
+        if(diff <= 1000 * 60) {
+            if (this.repeatEveryDay) {
+                Log.println(Log.INFO, "TimerModule", "Everyday " + calendar.getTime().toString() + " " + this.requestCode);
+                PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
+                alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, alarmIntent);
+            } else if (this.isRepeating) {
+                int[] dayArr = {Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY,
+                        Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY,
+                        Calendar.SATURDAY};
+                for (int i = 0; i < this.repeated.length; i++) {
+                    if (this.repeated[i]) {
+                        //Bentuk tanggal untuk hari ke - i
+                        calendar.set(Calendar.DAY_OF_WEEK, dayArr[i]);
+                        PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode + i,
+                                intent, 0);
+                        Log.println(Log.INFO, "TimerModule", "Repeating " + calendar.getTime().toString() + " " + this.requestCode);
+                        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                                AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+                    }
                 }
+            } else {
+                //Alarm biasa, nyala sekali saja
+                Log.println(Log.INFO, "TimerModule", "Once " + calendar.getTime().toString() + " " + this.requestCode);
+                PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
+                alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
             }
+            Log.println(Log.INFO, "TimerModule", "ConnectAksi done create alarm");
         }else{
-            //Alarm biasa, nyala sekali saja
-            Log.println(Log.INFO, "TimerModule", "Once " + calendar.getTime().toString() + " " + this.requestCode);
-            PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+            Log.println(Log.INFO, "TimerModule", "ConnectAksi batal create alarm karena sudah lewat");
         }
-        Log.println(Log.INFO, "TimerModule", "ConnectAksi done create alarm");
     }
 
     @Override
