@@ -1,35 +1,48 @@
 package com.ksatukeltiga.ifttw;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.fragment.app.DialogFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.Objects;
 
-public class TimePickerFragment extends DialogFragment
-        implements TimePickerDialog.OnTimeSetListener {
+public class DatePickerFragment extends DialogFragment
+        implements DatePickerDialog.OnDateSetListener {
+
+    private final Calendar c = Calendar.getInstance();
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current time as the default values for the picker
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        // Use the current date as the default date in the picker
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Create a new instance of TimePickerDialog and return it
-        return new TimePickerDialog(getActivity(), this, hour, minute,
-                DateFormat.is24HourFormat(getActivity()));
+        // Create a new instance of DatePickerDialog and return it
+        return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        // Do something with the time chosen by the user
-        TextView conditionText = (TextView) this.getActivity().findViewById(R.id.ifThis);
-        CharSequence charSequence = new StringBuffer("If Time is " + hourOfDay + " : " + minute);
-        conditionText.setText(charSequence);
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        String selectedDate = new SimpleDateFormat("EEE, MMM d yyyy", Locale.ENGLISH).format(c.getTime());
+
+        // send date back to the target fragment
+        Objects.requireNonNull(getTargetFragment()).onActivityResult(
+                getTargetRequestCode(),
+                Activity.RESULT_OK,
+                new Intent().putExtra("selectedDate", selectedDate)
+        );
     }
 }

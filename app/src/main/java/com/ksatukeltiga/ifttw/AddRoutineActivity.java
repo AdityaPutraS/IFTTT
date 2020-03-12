@@ -1,8 +1,5 @@
 package com.ksatukeltiga.ifttw;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +8,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import 	androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddRoutineActivity extends AppCompatActivity {
@@ -41,7 +45,7 @@ public class AddRoutineActivity extends AppCompatActivity {
                         case 0:
                             break;
                         case 1:
-                            FragmentManager fragMan = getFragmentManager();
+                            FragmentManager fragMan = getSupportFragmentManager();
                             FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             Fragment timerFragment = new TimerFragment();
                             fragTransaction.add(R.id.conditionContainer, timerFragment , "timerFragment");
@@ -97,22 +101,48 @@ public class AddRoutineActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveRoutine();
+                try {
+                    saveRoutine();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
         });
     }
 
-    private void saveRoutine() {
+    private void saveRoutine() throws ParseException {
         RoutineRepository routineRepository = new RoutineRepository(getApplicationContext());
         Spinner conditionSpinner = findViewById(R.id.conditionSpinner);
         Spinner actionSpinner = findViewById(R.id.actionSpinner);
         String kondisiString = conditionSpinner.getSelectedItem().toString();
         String aksiString = actionSpinner.getSelectedItem().toString();
-        ConditionModule kondisi = new TimerModule(new Date(), false, getApplicationContext());
-        ActionModule aksi = new NotifyModule(kondisiString, aksiString);
-        routineRepository.insertRoutine(kondisi, aksi);
+        ConditionModule kondisi = null;
+        ActionModule aksi;
+        Log.println(Log.INFO, "asd", kondisiString);
+        if(kondisiString.equalsIgnoreCase("Timer")) {
+            int[] dayIdArr = {R.id.sunday, R.id.monday, R.id.tuesday,
+                    R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday};
+            boolean[] repeated = new boolean[7];
+            for (int i = 0; i < 7; i++) {
+                ToggleButton temp = findViewById(dayIdArr[i]);
+                repeated[i] = temp.isChecked();
+            }
 
+            TextView dateText = findViewById(R.id.dateText);
+            TextView timeText = findViewById(R.id.timeText);
+            SimpleDateFormat dateTimeFormat = new SimpleDateFormat("EEE, MMM d yyyy KK:mm aa");
+            //Parsing the given String to Date object
+            String dateTimeString = dateText.getText().toString() + " " + timeText.getText().toString();
+            Date dateTime = dateTimeFormat.parse(dateTimeString);
+
+            kondisi = new TimerModule(dateTime, repeated, getApplicationContext());
+        }
+        aksi = new NotifyModule(kondisiString, aksiString);
+        if(kondisi != null && aksi != null)
+        {
+            routineRepository.insertRoutine(kondisi, aksi, getApplicationContext());
+        }
     }
 
 //    @Override

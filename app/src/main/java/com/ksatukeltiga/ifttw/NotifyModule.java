@@ -13,6 +13,8 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.util.Arrays;
+
 public class NotifyModule extends ActionModule {
     private String notification;
     private String title;
@@ -41,8 +43,17 @@ public class NotifyModule extends ActionModule {
     {
         this.data = data;
         String[] temp = data.split("---");
-        this.title = temp[0];
-        this.notification = temp[1];
+        Log.println(Log.INFO, "NotifyModule", "SetData : " + data + " " + Arrays.toString(temp));
+        if(temp.length == 2) {
+            this.title = temp[0];
+            this.notification = temp[1];
+        }
+        updateActionString();
+    }
+
+    @Override
+    public void updateActionString() {
+        this.actionString = "Notify (" + title +  ") \"" + notification + "\"";
     }
 
     @Override

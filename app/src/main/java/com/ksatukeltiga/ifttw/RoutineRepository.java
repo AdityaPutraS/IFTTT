@@ -17,8 +17,10 @@ public class RoutineRepository {
         }
 
         public void insertRoutine(ConditionModule kondisi,
-                                  ActionModule aksi) {
+                                  ActionModule aksi,
+                                  Context context)  {
             Routine routine = new Routine(kondisi, aksi);
+            routine.initRoutine(context);
 
             insertRoutine(routine);
         }
