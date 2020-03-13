@@ -48,20 +48,6 @@ public class TimerModule extends ConditionModule {
     public void updateConditionString(){
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("EEE, MMM d yyyy, KK:mm aa");
         this.conditionString = dateTimeFormat.format(this.activateWhen);
-    }
-
-    public void checkRepeated()
-    {
-        this.repeatEveryDay = true;
-        this.isRepeating = false;
-        for (int i = 0; i < this.repeated.length; i++) {
-            if(this.repeated[i])
-            {
-                this.isRepeating = true;
-            }else{
-                this.repeatEveryDay = false;
-            }
-        }
 
         if(this.isRepeating)
         {
@@ -79,6 +65,20 @@ public class TimerModule extends ConditionModule {
                 }
             }
             this.conditionString = this.conditionString.substring(0, this.conditionString.length() - 2);
+        }
+    }
+
+    public void checkRepeated()
+    {
+        this.repeatEveryDay = true;
+        this.isRepeating = false;
+        for (int i = 0; i < this.repeated.length; i++) {
+            if(this.repeated[i])
+            {
+                this.isRepeating = true;
+            }else{
+                this.repeatEveryDay = false;
+            }
         }
     }
 
