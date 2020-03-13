@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">IFTTW</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="if_this_condition">If This (Condition)</string>
+    <string name="then_what_action">Then What (Action)</string>
+
+    <string-array name="condition_module">
+        <item>Select module...</item>
+        <item>Timer</item>
+        <item>Gyroscope Sensor</item>
+    </string-array>
+    <string-array name="action_module">
+        <item>Select module...</item>
+        <item>Notify Me</item>
+        <item>Turn On WiFi</item>
+        <item>Turn Off WiFi</item>
+        <item>Send Email</item>
+    </string-array>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_tab">tab</string>
+    <string name="threshold">Threshold</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+</resources>
