@@ -169,6 +169,8 @@ public class FirstFragment extends Fragment {
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Routine temp = dataList.get(position);
+                    temp.setActive(false);
                     routineRepository.deleteRoutine(dataList.get(position));
                     Toast.makeText(getActivity(), "Routine " + (position+ + 1) + " deleted", Toast.LENGTH_SHORT).show();
                     dataList.remove(position);
