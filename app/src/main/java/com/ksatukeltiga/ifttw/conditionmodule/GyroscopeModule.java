@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.conditionmodule;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -11,6 +11,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
+
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
 
 public class GyroscopeModule extends ConditionModule implements SensorEventListener {
     private double threshold;

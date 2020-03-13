@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.fragment;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

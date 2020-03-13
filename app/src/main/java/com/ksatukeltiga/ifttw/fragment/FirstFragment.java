@@ -1,7 +1,6 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.fragment;
 
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,31 +19,35 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ksatukeltiga.ifttw.R;
+import com.ksatukeltiga.ifttw.room.Routine;
+import com.ksatukeltiga.ifttw.room.RoutineRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecondFragment extends Fragment {
+public class FirstFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private ListAdapter mListadapter;
     private RoutineRepository routineRepository;
     private LiveData<List<Routine>> activeRoutine;
-
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState
     ) {
-        Log.println(Log.INFO, "SecondFragment", "masuk onCreateView");
+        Log.println(Log.INFO, "FirstFragment", "masuk onCreateView");
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewFragSecond);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewFragFirst);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        forceUpdate(false);
+        forceUpdate(true);
+
         return view;
     }
 
@@ -64,32 +67,32 @@ public class SecondFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.println(Log.INFO, "SecondFragment", "masuk onViewCreated");
+        Log.println(Log.INFO, "FirstFragment", "masuk onViewCreated");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.println(Log.INFO, "SecondFragment", "masuk onStart");
+        Log.println(Log.INFO, "FirstFragment", "masuk onStart");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.println(Log.INFO, "SecondFragment", "masuk onPause");
+        Log.println(Log.INFO, "FirstFragment", "masuk onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.println(Log.INFO, "SecondFragment", "masuk onStop");
+        Log.println(Log.INFO, "FirstFragment", "masuk onStop");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        forceUpdate(false);
-        Log.println(Log.INFO, "SecondFragment", "masuk onResume");
+        forceUpdate(true);
+        Log.println(Log.INFO, "FirstFragment", "masuk onResume");
     }
 
     public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>
@@ -149,7 +152,6 @@ public class SecondFragment extends Fragment {
                 }
             });
 
-
             holder.switchRoutine.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     String state = isChecked ? "started" : "stopped" ;
@@ -160,7 +162,7 @@ public class SecondFragment extends Fragment {
                     routineRepository.insertRoutine(temp);
                     Toast.makeText(getActivity(), "Routine " + (position + 1) + " " + state, Toast.LENGTH_SHORT).show();
 //                    dataList.remove(position);
-//                    forceUpdate(false);
+//                    forceUpdate(true);
                 }
             });
 

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,26 +21,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddRoutineActivity"
+            android:name=".activity.AddRoutineActivity"
             android:label="Add Routine" />
         <activity
-            android:name=".TimerFragment"
+            android:name=".fragment.TimerFragment"
             android:label="Set Timer" />
         <activity
-            android:name=".GyroscopeFragment"
+            android:name=".fragment.GyroscopeFragment"
             android:label="Set Gyroscope Threshold" />
 
         <service
-            android:name=".ActionModule"
+            android:name=".actionmodule.ActionModule"
             android:exported="false" />
         <service
-            android:name=".NotifyModule"
+            android:name=".actionmodule.NotifyModule"
             android:exported="false" />
         <service
-            android:name=".EmailModule"
+            android:name=".actionmodule.EmailModule"
             android:exported="false" />
         <service
-            android:name=".WifiModule"
+            android:name=".actionmodule.WifiModule"
             android:exported="false"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

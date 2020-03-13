@@ -1,14 +1,17 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.room;
 
 import android.content.Context;
 import android.util.Log;
 
-import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
-import androidx.room.TypeConverters;
+
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
+import com.ksatukeltiga.ifttw.actionmodule.EmailModule;
+import com.ksatukeltiga.ifttw.actionmodule.NotifyModule;
+import com.ksatukeltiga.ifttw.conditionmodule.ConditionModule;
+import com.ksatukeltiga.ifttw.conditionmodule.TimerModule;
 
 import java.io.Serializable;
 import java.util.Date;

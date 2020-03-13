@@ -1,12 +1,12 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.conditionmodule;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
+
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.room;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
