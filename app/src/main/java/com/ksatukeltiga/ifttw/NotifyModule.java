@@ -14,8 +14,11 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class NotifyModule extends ActionModule {
+    private final String GROUP_KEY = "com.ksatukeltiga.ifttw.NOTIFY_ME";
+    private int notificationId;
     private String notification;
     private String title;
     private NotificationCompat.Builder builder;
@@ -31,11 +34,11 @@ public class NotifyModule extends ActionModule {
     public NotifyModule(String title, String notification)
     {
         super(0,
-                title + "---" + notification,
+                new Random().nextInt() + "---" + title + "---" + notification,
                 "NotifyModule",
                 "Notify (" + title +  ") \"" + notification + "\"");
-        this.notification = notification;
-        this.title = title;
+        this.setData(this.data);
+
     }
 
     @Override
@@ -44,9 +47,10 @@ public class NotifyModule extends ActionModule {
         this.data = data;
         String[] temp = data.split("---");
         Log.println(Log.INFO, "NotifyModule", "SetData : " + data + " " + Arrays.toString(temp));
-        if(temp.length == 2) {
-            this.title = temp[0];
-            this.notification = temp[1];
+        if(temp.length == 3) {
+            this.notificationId = Integer.parseInt(temp[0]);
+            this.title = temp[1];
+            this.notification = temp[2];
         }
         updateActionString();
     }
@@ -60,7 +64,7 @@ public class NotifyModule extends ActionModule {
     public Bundle getBundle()
     {
         Bundle bundle = new Bundle();
-        bundle.putInt("idNotification", 1);
+        bundle.putInt("idNotification", this.notificationId);
         bundle.putString("judul", this.title);
         bundle.putString("pesan", this.notification);
         return bundle;
@@ -97,9 +101,14 @@ public class NotifyModule extends ActionModule {
                 .setContentText(pesan)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setGroup(GROUP_KEY)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(pesan));
 
         notificationManager.notify(idNotif, builder.build());
+        builder.setGroupSummary(true);
+        notificationManager.notify(0, builder.build());
         Log.println(Log.DEBUG, "NotifyModule", "notify harusnya");
     }
 }

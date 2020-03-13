@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -109,25 +110,32 @@ public class AddRoutineActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean success = false;
                 try {
-                    saveRoutine();
+                    success = saveRoutine();
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                finish();
+                if(success)
+                {
+                    finish();
+                }else{
+                    Toast.makeText(view.getContext(), "Failed save routine", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 
-    private void saveRoutine() throws ParseException {
+    private boolean saveRoutine() throws ParseException {
         RoutineRepository routineRepository = new RoutineRepository(getApplicationContext());
         Spinner conditionSpinner = findViewById(R.id.conditionSpinner);
         Spinner actionSpinner = findViewById(R.id.actionSpinner);
         String kondisiString = conditionSpinner.getSelectedItem().toString();
         String aksiString = actionSpinner.getSelectedItem().toString();
         ConditionModule kondisi = null;
-        ActionModule aksi;
-        Log.println(Log.INFO, "asd", kondisiString);
+        ActionModule aksi= null;
+
+        // Create condition module
         if(kondisiString.equalsIgnoreCase("Timer")) {
             int[] dayIdArr = {R.id.sunday, R.id.monday, R.id.tuesday,
                     R.id.wednesday, R.id.thursday, R.id.friday, R.id.saturday};
@@ -146,11 +154,22 @@ public class AddRoutineActivity extends AppCompatActivity {
 
             kondisi = new TimerModule(dateTime, repeated, getApplicationContext());
         }
-        aksi = new NotifyModule(kondisiString, aksiString);
+
+        // Create action module
+        if(aksiString.equalsIgnoreCase("Notify Me")) {
+            EditText judulEditText = findViewById(R.id.judulEditText);
+            EditText bodyEditText = findViewById(R.id.bodyEditText);
+            aksi = new NotifyModule(judulEditText.getText().toString(), bodyEditText.getText().toString());
+        }
+        // Insert routine to database
         if(kondisi != null && aksi != null)
         {
             routineRepository.insertRoutine(kondisi, aksi, getApplicationContext());
+            return true;
         }
+
+        // Default return gagal
+        return false;
     }
 
 //    @Override
