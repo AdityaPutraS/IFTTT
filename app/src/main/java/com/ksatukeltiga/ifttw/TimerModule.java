@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -22,7 +23,7 @@ public class TimerModule extends ConditionModule {
 
     public TimerModule(Date activate, boolean[] repeated, Context context)
     {
-        Log.println(Log.INFO, "TimerModule", "CTOR TimerModule");
+//        Log.println(Log.INFO, "TimerModule", "CTOR TimerModule");
         this.moduleName = "TimerModule";
         this.activateWhen = (Date) activate.clone();
         Random rand = new Random();
@@ -85,7 +86,7 @@ public class TimerModule extends ConditionModule {
     @Override
     public void setData(String data)
     {
-        Log.println(Log.INFO, "TimerModule", "Set Data TimerModule");
+//        Log.println(Log.INFO, "TimerModule", "Set Data TimerModule");
         this.data = data;
         String[] args = data.split("---");
         this.requestCode = Integer.parseInt(args[0]);
@@ -120,6 +121,7 @@ public class TimerModule extends ConditionModule {
                 alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                         AlarmManager.INTERVAL_DAY, alarmIntent);
             } else if (this.isRepeating) {
+                Log.println(Log.INFO, "TimerModule", "Repeat specific day , start: " + calendar.getTime().toString() + " " + this.requestCode);
                 int[] dayArr = {Calendar.SUNDAY, Calendar.MONDAY, Calendar.TUESDAY,
                         Calendar.WEDNESDAY, Calendar.THURSDAY, Calendar.FRIDAY,
                         Calendar.SATURDAY};
@@ -127,11 +129,20 @@ public class TimerModule extends ConditionModule {
                     if (this.repeated[i]) {
                         //Bentuk tanggal untuk hari ke - i
                         calendar.set(Calendar.DAY_OF_WEEK, dayArr[i]);
+                        long diffNew = Calendar.getInstance().getTimeInMillis() - calendar.getTimeInMillis();
+                        if(diffNew > 0)
+                        {
+                            calendar.add(Calendar.WEEK_OF_MONTH, 1);
+                        }
                         PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode + i,
                                 intent, 0);
-                        Log.println(Log.INFO, "TimerModule", "Repeating " + calendar.getTime().toString() + " " + this.requestCode);
+                        Log.println(Log.INFO, "TimerModule", "Repeating " + calendar.getTime().toString() + " " + (this.requestCode + i));
                         alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                                 AlarmManager.INTERVAL_DAY * 7, alarmIntent);
+                        if(diffNew > 0)
+                        {
+                            calendar.add(Calendar.WEEK_OF_MONTH, -1);
+                        }
                     }
                 }
             } else {
