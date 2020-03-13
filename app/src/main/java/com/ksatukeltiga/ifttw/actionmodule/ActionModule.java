@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.actionmodule;
 
 import android.app.IntentService;
 import android.content.Intent;

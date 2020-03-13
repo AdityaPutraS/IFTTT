@@ -1,17 +1,17 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.actionmodule;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+
+import com.ksatukeltiga.ifttw.activity.MainActivity;
+import com.ksatukeltiga.ifttw.R;
 
 import java.util.Arrays;
 import java.util.Random;

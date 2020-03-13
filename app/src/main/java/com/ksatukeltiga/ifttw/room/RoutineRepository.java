@@ -1,10 +1,13 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.room;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
+
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
+import com.ksatukeltiga.ifttw.conditionmodule.ConditionModule;
 
 import java.util.List;
 

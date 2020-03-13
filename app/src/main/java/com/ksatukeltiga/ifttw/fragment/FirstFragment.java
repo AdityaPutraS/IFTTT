@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +18,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ksatukeltiga.ifttw.R;
+import com.ksatukeltiga.ifttw.room.Routine;
+import com.ksatukeltiga.ifttw.room.RoutineRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +169,8 @@ public class FirstFragment extends Fragment {
             holder.deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Routine temp = dataList.get(position);
+                    temp.setActive(false);
                     routineRepository.deleteRoutine(dataList.get(position));
                     Toast.makeText(getActivity(), "Routine " + (position+ + 1) + " deleted", Toast.LENGTH_SHORT).show();
                     dataList.remove(position);

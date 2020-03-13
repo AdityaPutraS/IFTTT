@@ -1,7 +1,9 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.conditionmodule;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
 
 import java.io.Serializable;
 

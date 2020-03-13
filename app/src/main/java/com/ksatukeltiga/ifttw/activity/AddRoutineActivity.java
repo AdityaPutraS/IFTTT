@@ -1,4 +1,4 @@
-package com.ksatukeltiga.ifttw;
+package com.ksatukeltiga.ifttw.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +18,19 @@ import androidx.fragment.app.FragmentManager;
 import 	androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
+import com.ksatukeltiga.ifttw.conditionmodule.ConditionModule;
+import com.ksatukeltiga.ifttw.fragment.EmailFragment;
+import com.ksatukeltiga.ifttw.fragment.GyroscopeFragment;
+import com.ksatukeltiga.ifttw.conditionmodule.GyroscopeModule;
+import com.ksatukeltiga.ifttw.fragment.NotifyFragment;
+import com.ksatukeltiga.ifttw.R;
+import com.ksatukeltiga.ifttw.room.RoutineRepository;
+import com.ksatukeltiga.ifttw.fragment.TimerFragment;
+import com.ksatukeltiga.ifttw.conditionmodule.TimerModule;
+import com.ksatukeltiga.ifttw.actionmodule.ActionModule;
+import com.ksatukeltiga.ifttw.actionmodule.EmailModule;
+import com.ksatukeltiga.ifttw.actionmodule.NotifyModule;
+import com.ksatukeltiga.ifttw.actionmodule.WifiModule;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
