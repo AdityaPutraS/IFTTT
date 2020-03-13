@@ -15,7 +15,7 @@
     <string-array name="condition_module">
         <item>Select module...</item>
         <item>Timer</item>
-        <item>Censor</item>
+        <item>Gyroscope Sensor</item>
         <item>API Ext</item>
     </string-array>
     <string-array name="action_module">
@@ -27,4 +27,7 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="title_activity_tab">tab</string>
+    <string name="threshold">Threshold</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
 </resources>

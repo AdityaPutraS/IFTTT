@@ -16,6 +16,7 @@ import java.util.Date;
 public class GyroscopeModule extends ConditionModule implements SensorEventListener {
     private double threshold;
     private double value;
+    private boolean repeated;
     private Context context;
     private SensorManager sensorManager;
     private Sensor sensor;
