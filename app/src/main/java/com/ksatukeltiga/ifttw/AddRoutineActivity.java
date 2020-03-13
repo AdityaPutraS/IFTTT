@@ -55,24 +55,17 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
         Spinner actionSpinner = findViewById(R.id.actionSpinner);
         String kondisiString = conditionSpinner.getSelectedItem().toString();
         String aksiString = actionSpinner.getSelectedItem().toString();
-//        ConditionModule kondisi = new TimerModule(new Date(), false, getApplicationContext());
-        ConditionModule kondisi = new GyroscopeModule(15, true, getApplicationContext());
-        ActionModule aksi = new NotifyModule(kondisiString, aksiString);
+        ConditionModule kondisi = new GyroscopeModule(20, true, getApplicationContext());
+        ActionModule aksi = new WifiModule("off");
         routineRepository.insertRoutine(kondisi, aksi);
 
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        String item = parent.getItemAtPosition(position).toString();
-//
-//        // Showing selected spinner item
-//        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }
