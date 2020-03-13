@@ -190,6 +190,10 @@ public class AddRoutineActivity extends AppCompatActivity {
 
         // Insert routine to database
         if(kondisi != null && aksi != null) {
+            if (kondisi instanceof GyroscopeModule) {
+                ((GyroscopeModule) kondisi).setActionClass(aksi.getClass().getName());
+                ((GyroscopeModule) kondisi).setBundle(aksi.getBundle());
+            }
             routineRepository.insertRoutine(kondisi, aksi, getApplicationContext());
             return true;
         }
