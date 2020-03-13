@@ -1,5 +1,9 @@
 # IF3210-2020-03-Project IFTTT
 
+## Anggota
+- Aditya Putra Santosa / 13517013
+- Syaiful Anwar / 13517139
+
 ## Deskripsi aplikasi
 IFTTW (If This Then What?)
 
