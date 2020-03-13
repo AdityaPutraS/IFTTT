@@ -22,11 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.println(Log.INFO, "MainActivityTag", "masuk ON_CREATE");
         tabs = findViewById(R.id.tabs);
+
+        setTabAdapter();
+
         tabs.addTab(tabs.newTab().setText("Active"));
         tabs.addTab(tabs.newTab().setText("Inactive"));
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        setTabAdapter();
 
         FloatingActionButton fab = findViewById(R.id.addFab);
 
@@ -41,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        setTabAdapter();
         Log.println(Log.INFO, "MainActivityTag", "masuk ON_START");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setTabAdapter();
         Log.println(Log.INFO, "MainActivityTag", "masuk ON_RESUME");
     }
 
