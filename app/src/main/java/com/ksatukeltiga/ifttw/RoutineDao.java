@@ -19,6 +19,9 @@ public interface RoutineDao {
         @Query("SELECT * FROM Routine")
         LiveData<List<Routine>> fetchAllRoutine();
 
+        @Query("SELECT * FROM Routine WHERE active =:status")
+        LiveData<List<Routine>> fetchAllRoutine(boolean status);
+
 
         @Query("SELECT * FROM Routine WHERE id =:routineId")
         LiveData<Routine> getRoutine(int routineId);

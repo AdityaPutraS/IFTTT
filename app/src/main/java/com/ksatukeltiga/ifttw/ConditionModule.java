@@ -6,14 +6,20 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class ConditionModule implements Serializable {
+public class ConditionModule implements Serializable, Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
     protected String data;
     protected String moduleName;
-    protected boolean repeated;
     protected String conditionString;
+
+    public Object clone() throws
+            CloneNotSupportedException
+    {
+        return super.clone();
+    }
+    public void updateConditionString() {}
 
     public String getData() {
         return data;
@@ -21,6 +27,7 @@ public class ConditionModule implements Serializable {
 
     public void setData(String data) {
         this.data = data;
+        updateConditionString();
     }
 
     public String getModuleName() {
@@ -39,14 +46,6 @@ public class ConditionModule implements Serializable {
         this.conditionString = conditionString;
     }
 
-    public boolean isRepeated() {
-        return repeated;
-    }
-
-    public void setRepeated(boolean repeated) {
-        this.repeated = repeated;
-    }
-
     public int getId() {
         return id;
     }
@@ -56,4 +55,6 @@ public class ConditionModule implements Serializable {
     }
 
     public void connectAksi(ActionModule aksi) {}
+
+    public void cancelAksi(ActionModule aksi) {}
 }

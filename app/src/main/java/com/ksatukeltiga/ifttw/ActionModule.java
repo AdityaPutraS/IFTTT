@@ -12,7 +12,7 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
 @Entity
-public class ActionModule extends IntentService implements Serializable {
+public class ActionModule extends IntentService implements Serializable, Cloneable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -27,12 +27,21 @@ public class ActionModule extends IntentService implements Serializable {
         this.actionString = actionString;
     }
 
+    public Object clone() throws
+            CloneNotSupportedException
+    {
+        return super.clone();
+    }
+
+    public void updateActionString() {}
+
     public String getData() {
         return data;
     }
 
     public void setData(String data) {
         this.data = data;
+        updateActionString();
     }
 
     public String getModuleName() {
