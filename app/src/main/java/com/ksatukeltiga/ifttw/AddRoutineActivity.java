@@ -56,7 +56,7 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
         String kondisiString = conditionSpinner.getSelectedItem().toString();
         String aksiString = actionSpinner.getSelectedItem().toString();
 //        ConditionModule kondisi = new TimerModule(new Date(), false, getApplicationContext());
-        ConditionModule kondisi = new GyroscopeModule(10, true, getApplicationContext());
+        ConditionModule kondisi = new GyroscopeModule(15, true, getApplicationContext());
         ActionModule aksi = new NotifyModule(kondisiString, aksiString);
         routineRepository.insertRoutine(kondisi, aksi);
 
@@ -64,10 +64,10 @@ public class AddRoutineActivity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
-
-        // Showing selected spinner item
-        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+//        String item = parent.getItemAtPosition(position).toString();
+//
+//        // Showing selected spinner item
+//        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
     }
 

@@ -21,6 +21,7 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
     private Sensor sensor;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
+    private ActionModule action;
 
     public GyroscopeModule(double threshold, boolean repeated, Context context) {
         this.moduleName = "GyroscopeModule";
@@ -41,21 +42,20 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
 
     @Override
     public void connectAksi(ActionModule aksi) {
-        if (this.value > this.threshold) {
-            alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Log.println(Log.INFO, "GyroscopeModule", aksi.getClass().getName());
-            Intent intent = new Intent(context, aksi.getClass());
-            intent.putExtras(aksi.getBundle());
-            Log.println(Log.INFO, "GyroscopeModule", aksi.getBundle().toString());
-            alarmIntent = PendingIntent.getService(context, 0, intent, 0);
+        Log.println(Log.INFO, "GyroscopeModule", aksi.getClass().getName());
+        Intent intent = new Intent(context, aksi.getClass());
+        intent.putExtras(aksi.getBundle());
+        Log.println(Log.INFO, "GyroscopeModule", aksi.getBundle().toString());
+        this.action = aksi;
 
-            alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() +
-                            2 * 1000, alarmIntent);
-            Log.println(Log.INFO, "GyroscopeModule", "done create alarm");
-        } else {
-            Log.println(Log.INFO, "GyroscopeModule", "don't create alarm");
-        }
+//        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        alarmIntent = PendingIntent.getService(context, 0, intent, 0);
+//
+//        alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+//                SystemClock.elapsedRealtime() +
+//                        2 * 1000, alarmIntent);
+//        Log.println(Log.INFO, "GyroscopeModule", "done create alarm");
+
     }
 
     @Override
@@ -69,7 +69,17 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
         this.value = Math.sqrt((ax * ax) + (ay * ay) + (az * az));
         if (this.value > this.threshold) {
             // trigger action
+            Log.println(Log.INFO, "GyroscopeModule", this.action.getClass().getName());
+            Intent intent = new Intent(context, this.action.getClass());
+            intent.putExtras(this.action.getBundle());
+            Log.println(Log.INFO, "GyroscopeModule", this.action.getBundle().toString());
             Log.println(Log.INFO, "Gyroscope value", ""+this.value);
+            alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            alarmIntent = PendingIntent.getService(context, 0, intent, 0);
+
+            alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime(), alarmIntent);
+            Log.println(Log.INFO, "GyroscopeModule", "done create alarm");
         }
     }
 
