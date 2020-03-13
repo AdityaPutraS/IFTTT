@@ -32,6 +32,10 @@
         <service
             android:name=".NotifyModule"
             android:exported="false" />
-    </application>
+        <service
+            android:name=".EmailModule"
+            android:exported="false" />
 
+    </application>
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

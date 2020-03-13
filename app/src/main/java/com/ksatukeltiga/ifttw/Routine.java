@@ -55,6 +55,11 @@ public class Routine implements Serializable {
             ActionModule temp = new NotifyModule("", "");
             temp.setData(this.aksi.getData());
             this.aksi = temp;
+        }else if(this.aksi.getModuleName().equalsIgnoreCase("EmailModule"))
+        {
+            ActionModule temp = new EmailModule("", "", "", "");
+            temp.setData(this.aksi.getData());
+            this.aksi = temp;
         }
         Log.println(Log.INFO, "Routine", "InitRoutine akondisi : " + this.kondisi.getData());
         Log.println(Log.INFO, "Routine", "InitRoutine aaksi : " + this.aksi.getData());

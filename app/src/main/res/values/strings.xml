@@ -16,13 +16,13 @@
         <item>Select module...</item>
         <item>Timer</item>
         <item>Censor</item>
-        <item>API Ext</item>
     </string-array>
     <string-array name="action_module">
         <item>Select module...</item>
         <item>Notify Me</item>
         <item>Turn On WiFi</item>
         <item>Turn Off WiFi</item>
+        <item>Send Email</item>
     </string-array>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>

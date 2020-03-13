@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+
         setTabAdapter();
         Log.println(Log.INFO, "MainActivityTag", "masuk ON_RESUME");
     }

@@ -114,7 +114,7 @@ public class TimerModule extends ConditionModule {
         calendar.setTime(this.activateWhen);
         // Cek apakah activateWhen sudah lewat / belum
         long diff = Calendar.getInstance().getTimeInMillis() - calendar.getTimeInMillis();
-        if(diff <= 1000 * 60) {
+        if(diff <= 1000 * 60 || true) {
             if (this.repeatEveryDay) {
                 Log.println(Log.INFO, "TimerModule", "Everyday " + calendar.getTime().toString() + " " + this.requestCode);
                 PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
