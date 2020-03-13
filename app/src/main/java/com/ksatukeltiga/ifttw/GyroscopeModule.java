@@ -8,10 +8,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
-
-import java.util.Date;
 
 public class GyroscopeModule extends ConditionModule implements SensorEventListener {
     private double threshold;
@@ -22,7 +21,9 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
     private Sensor sensor;
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
-    private ActionModule action;
+    private Bundle bundle;
+    private String actionClass;
+    private Object object;
 
     public GyroscopeModule(double threshold, boolean repeated, Context context) {
         this.moduleName = "GyroscopeModule";
@@ -36,6 +37,11 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
         this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         this.sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
+
+    public void setActionClass(String actionClass) {
+        this.actionClass = actionClass;
+    }
+
     @Override
     public void setData(String data) {
         this.data = data;
@@ -47,7 +53,10 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
         Intent intent = new Intent(context, aksi.getClass());
         intent.putExtras(aksi.getBundle());
         Log.println(Log.INFO, "GyroscopeModule", aksi.getBundle().toString());
-        this.action = aksi;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 
     @Override
@@ -61,14 +70,19 @@ public class GyroscopeModule extends ConditionModule implements SensorEventListe
         this.value = Math.sqrt((ax * ax) + (ay * ay) + (az * az));
         if (this.value > this.threshold) {
             // trigger action
-            Log.println(Log.INFO, "GyroscopeModule", this.action.getClass().getName());
-            Intent intent = new Intent(context, this.action.getClass());
-            intent.putExtras(this.action.getBundle());
-            Log.println(Log.INFO, "GyroscopeModule", this.action.getBundle().toString());
+            Class action = null;
+            try {
+                action = Class.forName(this.actionClass);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Log.println(Log.INFO, "GyroscopeModule", this.actionClass);
+            Intent intent = new Intent(context, action);
+            intent.putExtras(this.bundle);
+            Log.println(Log.INFO, "GyroscopeModule", this.bundle.toString());
             Log.println(Log.INFO, "Gyroscope value", ""+this.value);
             alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alarmIntent = PendingIntent.getService(context, 0, intent, 0);
-
             alarmMgr.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     SystemClock.elapsedRealtime(), alarmIntent);
         }

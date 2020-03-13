@@ -26,6 +26,9 @@
         <activity
             android:name=".TimerFragment"
             android:label="Set Timer" />
+        <activity
+            android:name=".GyroscopeFragment"
+            android:label="Set Gyroscope Threshold" />
 
         <service
             android:name=".ActionModule"
