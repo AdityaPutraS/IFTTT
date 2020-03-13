@@ -1,6 +1,5 @@
 package com.ksatukeltiga.ifttw;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import 	androidx.fragment.app.FragmentTransaction;
@@ -25,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Timer;
 
 public class AddRoutineActivity extends AppCompatActivity {
 
@@ -77,15 +74,14 @@ public class AddRoutineActivity extends AppCompatActivity {
                 LinearLayout actionContainer = parent.getRootView().findViewById(R.id.actionContainer);
                 if(actionContainer != null) {
                     actionContainer.removeAllViews();
+                    FragmentManager fragMan = getSupportFragmentManager();
+                    FragmentTransaction fragTransaction = fragMan.beginTransaction();
                     switch (position) {
                         case 0:
                             break;
                         case 1:
-                            FragmentManager fragMan = getSupportFragmentManager();
-                            FragmentTransaction fragTransaction = fragMan.beginTransaction();
                             Fragment notifyFragment = new NotifyFragment();
                             fragTransaction.add(R.id.actionContainer, notifyFragment , "notifyFragment");
-                            fragTransaction.commit();
                             Toast.makeText(parent.getContext(), "Notify Action", Toast.LENGTH_SHORT).show();
                             break;
                         case 2:
@@ -94,7 +90,13 @@ public class AddRoutineActivity extends AppCompatActivity {
                         case 3:
                             Toast.makeText(parent.getContext(), "Turn Off WiFi Action!", Toast.LENGTH_SHORT).show();
                             break;
+                        case 4:
+                            Fragment emailFragment = new EmailFragment();
+                            fragTransaction.add(R.id.actionContainer, emailFragment , "emailFragment");
+                            Toast.makeText(parent.getContext(), "Email Action", Toast.LENGTH_SHORT).show();
+                            break;
                     }
+                    fragTransaction.commit();
                 }
             }
 
@@ -171,9 +173,15 @@ public class AddRoutineActivity extends AppCompatActivity {
 
         // Create action module
         if(aksiString.equalsIgnoreCase("Notify Me")) {
-            EditText judulEditText = findViewById(R.id.judulEditText);
-            EditText bodyEditText = findViewById(R.id.bodyEditText);
+            EditText judulEditText = findViewById(R.id.fromEditText);
+            EditText bodyEditText = findViewById(R.id.toEditText);
             aksi = new NotifyModule(judulEditText.getText().toString(), bodyEditText.getText().toString());
+        }else if(aksiString.equalsIgnoreCase("Send Email")) {
+            String from = ((EditText) findViewById(R.id.fromEditText)).getText().toString();
+            String to = ((EditText) findViewById(R.id.toEditText)).getText().toString();
+            String title = ((EditText) findViewById(R.id.titleEditText)).getText().toString();
+            String body = ((EditText) findViewById(R.id.bodyEditText)).getText().toString();
+            aksi = new EmailModule(title, body, from , to);
         } else if (aksiString.equalsIgnoreCase("Turn On WiFi")) {
             aksi = new WifiModule("on");
         } else if (aksiString.equalsIgnoreCase("Turn Off WiFi")) {
