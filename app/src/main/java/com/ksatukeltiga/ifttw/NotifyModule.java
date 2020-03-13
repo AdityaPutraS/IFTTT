@@ -110,5 +110,7 @@ public class NotifyModule extends ActionModule {
         builder.setGroupSummary(true);
         notificationManager.notify(0, builder.build());
         Log.println(Log.DEBUG, "NotifyModule", "notify harusnya");
+
+
     }
 }
