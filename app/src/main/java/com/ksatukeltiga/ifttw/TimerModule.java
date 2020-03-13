@@ -149,7 +149,7 @@ public class TimerModule extends ConditionModule {
                 //Alarm biasa, nyala sekali saja
                 Log.println(Log.INFO, "TimerModule", "Once " + calendar.getTime().toString() + " " + this.requestCode);
                 PendingIntent alarmIntent = PendingIntent.getService(context, this.requestCode, intent, 0);
-                alarmMgr.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+                alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
             }
             Log.println(Log.INFO, "TimerModule", "ConnectAksi done create alarm");
         }else{

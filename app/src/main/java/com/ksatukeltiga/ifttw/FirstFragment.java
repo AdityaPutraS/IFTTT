@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,6 +110,7 @@ public class FirstFragment extends Fragment {
             TextView textKondisi;
             TextView textAksi;
             Switch switchRoutine;
+            ImageButton deleteButton;
 
             public ViewHolder(View itemView)
             {
@@ -116,6 +118,7 @@ public class FirstFragment extends Fragment {
                 this.textKondisi = (TextView) itemView.findViewById(R.id.kondisi);
                 this.textAksi = (TextView) itemView.findViewById(R.id.aksi);
                 this.switchRoutine = (Switch) itemView.findViewById(R.id.switchRoutine);
+                this.deleteButton = (ImageButton) itemView.findViewById(R.id.deleteButton);
             }
         }
 
@@ -156,6 +159,15 @@ public class FirstFragment extends Fragment {
                     Toast.makeText(getActivity(), "Routine " + (position + 1) + " " + state, Toast.LENGTH_SHORT).show();
 //                    dataList.remove(position);
 //                    forceUpdate(true);
+                }
+            });
+
+            holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    routineRepository.deleteRoutine(dataList.get(position));
+                    Toast.makeText(getActivity(), "Routine " + (position+ + 1) + " deleted", Toast.LENGTH_SHORT).show();
+                    dataList.remove(position);
                 }
             });
         }

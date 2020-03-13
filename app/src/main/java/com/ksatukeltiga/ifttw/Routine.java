@@ -58,6 +58,8 @@ public class Routine implements Serializable {
         }
         Log.println(Log.INFO, "Routine", "InitRoutine akondisi : " + this.kondisi.getData());
         Log.println(Log.INFO, "Routine", "InitRoutine aaksi : " + this.aksi.getData());
+        // Force connect/disconnect kondisi & aksi
+        this.setActive(this.active);
     }
 
     public ConditionModule getKondisi() {
