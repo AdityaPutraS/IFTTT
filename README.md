@@ -51,3 +51,22 @@ Setelah selesai memilih aksi dan kondisi, user bisa mengklik tombol save di pojo
 - **Volley** : Library bawaan android untuk mengirim request ke URL. Kami menggunakannya untuk mengirim **POST** request ke **SendGrid API**.
 
 ## Screenshot aplikasi
+
+### Active Routine
+<img src="screenshot/active-routine.jpg"/>
+
+
+### Inactive Routine
+<img src="screenshot/inactive-routine.jpg"/>
+
+
+### Condition: Gyroscope; Action: Email API (sengrid)
+<img src="screenshot/gyro-email.jpg"/>
+
+
+### Condition: Timer; Action: Notify Me
+<img src="screenshot/timer-notify.jpg"/>
+
+
+### Landscape view Condition Action Module
+<img src="screenshot/landscape-module.jpg"/>
