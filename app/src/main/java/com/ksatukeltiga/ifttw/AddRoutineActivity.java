@@ -1,6 +1,7 @@
 package com.ksatukeltiga.ifttw;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import 	androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -51,7 +53,12 @@ public class AddRoutineActivity extends AppCompatActivity {
                             Toast.makeText(parent.getContext(), "Timer Condition", Toast.LENGTH_SHORT).show();
                             break;
                         case 2:
-                            Toast.makeText(parent.getContext(), "Sensor Condition", Toast.LENGTH_SHORT).show();
+                            FragmentManager fragmentManager = getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            Fragment gyroscopeFragment = new GyroscopeFragment();
+                            fragmentTransaction.add(R.id.conditionContainer, gyroscopeFragment, "gyroscopeFragment");
+                            fragmentTransaction.commit();
+                            Toast.makeText(parent.getContext(), "Gyroscope Sensor Condition", Toast.LENGTH_SHORT).show();
                             break;
                     }
                 }
@@ -78,9 +85,10 @@ public class AddRoutineActivity extends AppCompatActivity {
                             Toast.makeText(parent.getContext(), "Notify Action", Toast.LENGTH_SHORT).show();
                             break;
                         case 2:
-                            Toast.makeText(parent.getContext(), "Spinner item 3!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(parent.getContext(), "Turn On WiFi Action!", Toast.LENGTH_SHORT).show();
                             break;
                         case 3:
+                            Toast.makeText(parent.getContext(), "Turn Off WiFi Action!", Toast.LENGTH_SHORT).show();
                             break;
                         case 4:
                             Fragment emailFragment = new EmailFragment();
@@ -156,6 +164,11 @@ public class AddRoutineActivity extends AppCompatActivity {
             Date dateTime = dateTimeFormat.parse(dateTimeString);
 
             kondisi = new TimerModule(dateTime, repeated, getApplicationContext());
+        } else if (kondisiString.equalsIgnoreCase("Gyroscope Sensor")) {
+            EditText thresholdText = findViewById(R.id.thresholdEditText);
+            double threshold = Double.parseDouble(thresholdText.getText().toString());
+            Log.i("threshold", ""+threshold);
+            kondisi = new GyroscopeModule(threshold,true, getApplicationContext());
         }
 
         // Create action module
@@ -169,10 +182,14 @@ public class AddRoutineActivity extends AppCompatActivity {
             String title = ((EditText) findViewById(R.id.titleEditText)).getText().toString();
             String body = ((EditText) findViewById(R.id.bodyEditText)).getText().toString();
             aksi = new EmailModule(title, body, from , to);
+        } else if (aksiString.equalsIgnoreCase("Turn On WiFi")) {
+            aksi = new WifiModule("on");
+        } else if (aksiString.equalsIgnoreCase("Turn Off WiFi")) {
+            aksi = new WifiModule("off");
         }
+
         // Insert routine to database
-        if(kondisi != null && aksi != null)
-        {
+        if(kondisi != null && aksi != null) {
             routineRepository.insertRoutine(kondisi, aksi, getApplicationContext());
             return true;
         }
@@ -180,18 +197,4 @@ public class AddRoutineActivity extends AppCompatActivity {
         // Default return gagal
         return false;
     }
-
-//    @Override
-//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        String item = parent.getItemAtPosition(position).toString();
-//
-//        // Showing selected spinner item
-//        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
-//
-//    }
-
-//    @Override
-//    public void onNothingSelected(AdapterView<?> parent) {
-//
-//    }
 }

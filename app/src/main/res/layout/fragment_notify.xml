@@ -20,7 +20,7 @@
             android:id="@+id/fromEditText"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Title" />
+            android:hint="@string/title" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -39,7 +39,7 @@
             android:id="@+id/toEditText"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:hint="Body" />
+            android:hint="@string/body" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
