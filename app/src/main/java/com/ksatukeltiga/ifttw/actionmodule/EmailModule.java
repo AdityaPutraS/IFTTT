@@ -25,8 +25,7 @@ public class EmailModule extends ActionModule {
     private String body;
     private String from;
     private String to;
-    // Jangan digunakan untuk macam macam
-    private final String API_KEY = "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";
+    private final String API_KEY = "<INSERT SENDGRID API KEY HERE>";
     private final String defaultJson = "{\"personalizations\": [{\"to\": [{\"email\": \"\"}]}],\"from\": {\"email\": \"\"},\"subject\": \"\",\"content\": [{\"type\": \"text/plain\", \"value\": \"\"}]}";
     private final String endpoint = "https://api.sendgrid.com/v3/mail/send";
     public EmailModule()
